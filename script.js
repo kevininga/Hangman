@@ -1,20 +1,11 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
-const countries = [
-  "ALBANIA", "ALGERIA", "BERMUDA", "CANADA", "CHILE", "DENMARK", "ENGLAND", "ECUADOR", "FIJI",  "GERMANY", "HAITI", "MADAGASCAR", 
-  // Add more countries here
-];
-
-const food = [
-  "ANCHOVY", "BAGEL", "BURRITO", "CURRY", "DRAGONFRUIT", "HAMBURGER", "LASAGNA", "PIE", "PIZZA", "QUICHE", "RICE", "SALAD"
-  // Add more food items here
-];
-
-const jobs = [
-  "ARCHITECT", "ANIMATOR", "BARISTA", "DOCTOR", "DANCER", "ENGINEER", "TEACHER", "CHEF", "TEACHER", "FIREFIGHTER", "JUDGE", "ORTHODONTIST", "PILOT", "PLUMBER", 
-  // Add more job titles here
-];
+const categoriesData = {
+  countries: ["ALBANIA", "ALGERIA", "BERMUDA", "CANADA", "CHILE", "DENMARK", "ENGLAND", "ECUADOR", "FIJI",  "GERMANY", "HAITI", "MADAGASCAR"],
+  food: ["APPLE", "BAGEL", "BURRITO", "CURRY", "DRAGONFRUIT", "HAMBURGER", "LASAGNA", "PIE", "PIZZA", "QUICHE", "RICE", "SALAD"],
+  jobs: ["ARCHITECT", "ANIMATOR", "BARISTA", "DOCTOR", "DANCER", "ENGINEER", "TEACHER", "CHEF", "TEACHER", "FIREFIGHTER", "JUDGE", "ORTHODONTIST", "PILOT", "PLUMBER"]
+};
 
 const maxWrong = 6;
 const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -26,7 +17,7 @@ let wordStatus = null;
 let hintRevealed = false;
 let score = 0;
 let highScores = JSON.parse(localStorage.getItem('highScores')) || [];
-let category = countries; // Default category
+let category = categoriesData.countries; // Default category
 
 function selectCategory() {
   const categoryModal = document.getElementById("categoryModal");
@@ -45,18 +36,19 @@ function selectCategory() {
 function setCategory(selectedCategory) {
   switch (selectedCategory) {
     case "countries":
-      category = countries;
+      category = categoriesData.countries;
       break;
     case "food":
-      category = food;
+      category = categoriesData.food;
       break;
     case "jobs":
-      category = jobs;
+      category = categoriesData.jobs;
       break;
     default:
       alert("Invalid category");
   }
   reset();
+  letters.split('').forEach(letter => document.getElementById(letter).removeAttribute('disabled'));
 }
 
 // Drawing functions
@@ -96,14 +88,9 @@ function randomWordFromCategory() {
   word = category[Math.floor(Math.random() * category.length)];
 }
 
-function generateButtons() {
-  let buttonsHTML = letters.split('').map(letter => `<button class="letter-button" id='${letter}' onClick="processGuessedLetter('${letter}')">${letter}</button>`).join('');
-  let buttonsContainer = `<div class="keyboard">${buttonsHTML}</div>`;
-  document.getElementById('message').innerHTML = buttonsContainer;
-}
-
 // Game play functions
 function processKeyPress(event) {
+  if (!category) return; // If no category is selected, don't process key press
   let letter = event.key.toUpperCase();
   if (/^[A-Z]$/.test(letter)) {
     processGuessedLetter(letter);
@@ -111,7 +98,7 @@ function processKeyPress(event) {
 }
 
 function processGuessedLetter(chosenLetter) {
-  if (guessed.includes(chosenLetter)) return;
+  if (!category || guessed.includes(chosenLetter)) return; // If no category is selected or letter is already guessed, don't process it
   guessed.push(chosenLetter);
   document.getElementById(chosenLetter).setAttribute('disabled', true);
   if (word.includes(chosenLetter)) {
@@ -124,6 +111,12 @@ function processGuessedLetter(chosenLetter) {
     drawBodyPart();
   }
   updateGuessedLetters();
+}
+
+function generateButtons() {
+  let buttonsHTML = letters.split('').map(letter => `<button class="letter-button" id='${letter}' onClick="processGuessedLetter('${letter}')" disabled>${letter}</button>`).join('');
+  let buttonsContainer = `<div class="keyboard">${buttonsHTML}</div>`;
+  document.getElementById('message').innerHTML = buttonsContainer;
 }
 
 function updateGuessedLetters() {
@@ -214,7 +207,7 @@ function revealHint() {
   document.getElementById('hint').setAttribute('disabled', true);
 }
 
-// Initialization
+// Reset Function
 function reset() {
   selectCategory();
   mistakes = 0;
@@ -228,8 +221,6 @@ function reset() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawInitialGameBoard();
 }
-
-
 
 // Initialization
 document.addEventListener('DOMContentLoaded', function () {

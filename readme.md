@@ -37,3 +37,8 @@ Welcome to Hangman, this is a simple web-based version of the classic Hangman ga
 
 - Add a seperate data file for my category arrays so that they can be easily accessed and also seperated from my javascript which ultimately makes it look more cleaner.
 
+- Add sounds and animations for clicking the buttons, closing out the high score, make the character images instead of a stick figure and when you win the game.
+
+- Add a level of diifulty to the game so the players would have to guess harder or easier words.
+
+- Add a timer feature so the player has a certain amount of time to guess as many words as possible before the time runs out.
