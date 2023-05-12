@@ -19,8 +19,7 @@ Link to the game here: https://stirring-shortbread-8cbddf.netlify.app
 ![Image](start-game.jpeg)
 
 
-## User Stories
-### MVP Goals
+## Gameplay
 - At the start of the game, a random word is selected from the chosen category. The word is displayed as a series of underscores, each representing a letter in the word. The player can guess a letter in the word by clicking on the letter's button.
 
 - If the guessed letter is in the word, all instances of that letter are revealed in the word. If the guessed letter is not in the word, the number of wrong guesses increases and a part of the hangman is drawn.
@@ -34,7 +33,7 @@ Link to the game here: https://stirring-shortbread-8cbddf.netlify.app
 - The player can choose to play again at any time by clicking the "Play Again" button.
 
 
-### Stretch Goals
+## Stretch Goals
 - Add spacing between words to allow the possibility of guessing two words. Currently the game is only optimized for one word guesses as two words just display on the screen as one big word.
 
 - Add a seperate data file for my category arrays so that they can be easily accessed and also seperated from my javascript which ultimately makes it look more cleaner.
