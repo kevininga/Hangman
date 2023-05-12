@@ -1,28 +1,33 @@
+// Get the canvas element and its context for drawing the hangman
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
+// Data for the game, divided into categories
 const categoriesData = {
   countries: ["ALBANIA", "ALGERIA", "BERMUDA", "CANADA", "CHILE", "DENMARK", "ENGLAND", "ECUADOR", "FIJI",  "GERMANY", "HAITI", "MADAGASCAR"],
   food: ["APPLE", "BAGEL", "BURRITO", "CURRY", "DRAGONFRUIT", "HAMBURGER", "LASAGNA", "PIE", "PIZZA", "QUICHE", "RICE", "SALAD"],
   jobs: ["ARCHITECT", "ANIMATOR", "BARISTA", "DOCTOR", "DANCER", "ENGINEER", "TEACHER", "CHEF", "TEACHER", "FIREFIGHTER", "JUDGE", "ORTHODONTIST", "PILOT", "PLUMBER"]
 };
 
+// Maximum number of wrong guesses before the game is lost
 const maxWrong = 6;
+
+// All possible letters to guess
 const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-let word = '';
-let mistakes = 0;
-let guessed = [];
-let wordStatus = null;
-let hintRevealed = false;
-let score = 0;
-let highScores = JSON.parse(localStorage.getItem('highScores')) || [];
-let category = categoriesData.countries; // Default category
+let word = ''; // The current word to guess
+let mistakes = 0; // The number of wrong guesses made so far
+let guessed = []; // The letters that have been guessed so far
+let wordStatus = null; // The current status of the word, with underscores for unknown letters
+let hintRevealed = false; // Whether a hint has been revealed
+let score = 0; // The current score
+let highScores = JSON.parse(localStorage.getItem('highScores')) || []; // High scores saved in local storage
+let category = categoriesData.countries; // Default category for the game
 
+// Function to open the category selection modal
 function selectCategory() {
   const categoryModal = document.getElementById("categoryModal");
   categoryModal.style.display = "block";
-
   const categoryButtons = document.getElementsByClassName("category-button");
   for (let i = 0; i < categoryButtons.length; i++) {
     categoryButtons[i].addEventListener("click", function () {
@@ -33,6 +38,7 @@ function selectCategory() {
   }
 }
 
+// Function to set the category based on user's selection
 function setCategory(selectedCategory) {
   switch (selectedCategory) {
     case "countries":
@@ -51,7 +57,7 @@ function setCategory(selectedCategory) {
   letters.split('').forEach(letter => document.getElementById(letter).removeAttribute('disabled'));
 }
 
-// Drawing functions
+// Drawing functions for the gallows
 function drawInitialGameBoard() {
   ctx.lineWidth = "6";
   ctx.strokeStyle = "black";
@@ -63,6 +69,7 @@ function drawInitialGameBoard() {
   ctx.stroke();
 }
 
+// Drawing functions for the hangman
 function drawBodyPart() {
   ctx.beginPath();
   switch (mistakes) {
@@ -84,11 +91,20 @@ function drawBodyPart() {
 }
 
 // Game initialization functions
+// Function to randomly select a word from the current category
 function randomWordFromCategory() {
   word = category[Math.floor(Math.random() * category.length)];
 }
 
+// Function to generate the letter buttons for the game interface
+function generateButtons() {
+  let buttonsHTML = letters.split('').map(letter => `<button class="letter-button" id='${letter}' onClick="processGuessedLetter('${letter}')" disabled>${letter}</button>`).join('');
+  let buttonsContainer = `<div class="keyboard">${buttonsHTML}</div>`;
+  document.getElementById('message').innerHTML = buttonsContainer;
+}
+
 // Game play functions
+// Function to handle keypress events
 function processKeyPress(event) {
   if (!category) return; // If no category is selected, don't process key press
   let letter = event.key.toUpperCase();
@@ -97,6 +113,7 @@ function processKeyPress(event) {
   }
 }
 
+// Function to process a guessed letter
 function processGuessedLetter(chosenLetter) {
   if (!category || guessed.includes(chosenLetter)) return; // If no category is selected or letter is already guessed, don't process it
   guessed.push(chosenLetter);
@@ -113,17 +130,13 @@ function processGuessedLetter(chosenLetter) {
   updateGuessedLetters();
 }
 
-function generateButtons() {
-  let buttonsHTML = letters.split('').map(letter => `<button class="letter-button" id='${letter}' onClick="processGuessedLetter('${letter}')" disabled>${letter}</button>`).join('');
-  let buttonsContainer = `<div class="keyboard">${buttonsHTML}</div>`;
-  document.getElementById('message').innerHTML = buttonsContainer;
-}
-
+// Function to update the list of guessed letters
 function updateGuessedLetters() {
   const guessedLettersHTML = guessed.map(letter => `<span>${letter}</span>`).join(' ');
   document.getElementById('guessedLetters').innerHTML = guessedLettersHTML;
 }
 
+// Function to update the displayed word status
 function updateWordStatus() {
   wordStatus = word.split('').map(letter => {
     if (guessed.includes(letter)) {
@@ -139,6 +152,7 @@ function updateWordStatus() {
   document.getElementById('wordSpotlight').innerHTML = wordStatus;
 }
 
+// Function to check if the game has been won
 function checkIfGameWon() {
   if (wordStatus === word) {
     score++; // Increase the score
@@ -148,6 +162,7 @@ function checkIfGameWon() {
   }
 }
 
+// Function to check if the game has been lost
 function checkIfGameLost() {
   if (mistakes !== maxWrong) return;
   document.getElementById('wordSpotlight').innerHTML = `The answer was: ${word}`;
@@ -166,7 +181,7 @@ function checkIfGameLost() {
   }, 250); // Delay the prompt by .5 seconds (500 milliseconds)
 }
 
-// Display high scores function
+// Function to display the high scores
 function displayHighScores() {
   const highScoresList = highScores
     .map((score, i) => `<tr><td>${i + 1}</td><td>${score.name}</td><td>${score.score}</td></tr>`).join('');
@@ -189,9 +204,11 @@ function displayHighScores() {
   }
 }
 
+// Function to update the number of mistakes displayed
 function updateMistakes() {
   document.getElementById('mistakes').innerHTML = mistakes;
 }
+
 
 function revealHint() {
   if (hintRevealed) return;
@@ -222,7 +239,7 @@ function reset() {
   drawInitialGameBoard();
 }
 
-// Initialization
+// Initialization code to run when the page loads
 document.addEventListener('DOMContentLoaded', function () {
   drawInitialGameBoard();
   randomWordFromCategory();
