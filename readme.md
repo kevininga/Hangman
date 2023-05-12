@@ -3,6 +3,8 @@
 ## Project Description
 Welcome to Hangman, this is a simple web-based version of the classic Hangman game. Try to guess the word by selecting letters one at a time. Be careful though, you only get a limited number of mistakes before you lose the game!
 
+Link to the game here: https://stirring-shortbread-8cbddf.netlify.app
+
 
 ## Features
 1. Selection of words from different categories (Countries, Food, Jobs)
