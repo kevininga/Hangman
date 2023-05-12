@@ -5,12 +5,12 @@ Welcome to Hangman, this is a simple web-based version of the classic Hangman ga
 
 
 ## Features
-Selection of words from different categories (Countries, Food, Jobs)
-Score tracking
-High scores table
-Keyboard support
-Hint feature
-Play Again feature
+1. Selection of words from different categories (Countries, Food, Jobs)
+2. Score tracking
+3. High scores table
+4. Keyboard support
+5. Hint feature
+6. Play Again feature
 
 
 # Start Game
