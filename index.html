@@ -66,4 +66,72 @@
     </main>
 </body>
 
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dokdo&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+
+</head>
+
+<body>
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+          <h2>Select a Category</h2>
+          <div class="category-buttons">
+            <button class="category-button" data-category="countries">Countries</button>
+            <button class="category-button" data-category="food">Food</button>
+            <button class="category-button" data-category="jobs">Jobs</button>
+          </div>
+        </div>
+      </div>
+      
+    <header>
+        <h1>HANGMAN</h1>
+        <p>Try To Guess the Random Word!</p>
+    </header>
+    <section>
+        <canvas id="myCanvas" width="500" height="300"></canvas>
+    </section>
+    <main>
+        <div class="currentScore">Score: <span id='score'>0</span></div>
+        <div id="highScoresModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <table id="highScores">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="info">
+            <div class="guesses">Wrong Guesses: <span id='mistakes'>0</span> of <span id='maxWrong'></span></div>
+            <article>
+                <p id="wordSpotlight"></p>
+            </article>
+            <section>
+                <div id="message"></div>
+            </section>
+            <div class="buttons">
+                <button id="hint" onClick="revealHint()">Hint</button>
+                <button class="btn" onClick="reset()">Play Again</button>
+            </div>
+        </div>
+    </main>
+</body>
+
 </html>

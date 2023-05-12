@@ -1,21 +1,39 @@
-Project-1 Game
-HANGMAN
+# Project-1 Game: Hangman
 
-Project Description
-Welcome to Hangman, a game where you  have to guess ta random word. Players select one of three different categories (countries, foods, or jobs) from the pop up screen and a random word will be generated from that category. The player must then try to guess the word in 6 guesses or under in order to score a point, if not the player loses the game! This was developed using HTML, CSS, and Javascript.
-
-Wire Frames
+## Project Description
+Welcome to Hangman, this is a simple web-based version of the classic Hangman game. Try to guess the word by selecting letters one at a time. Be careful though, you only get a limited number of mistakes before you lose the game!
 
 
-User Stories
-MVP Goals
+## Features
+Selection of words from different categories (Countries, Food, Jobs)
+Score tracking
+High scores table
+Keyboard support
+Hint feature
+Play Again feature
 
-As the player, you will be able to click the letters on the screen and try to guess the word
-As the computer, it will tell the player if they got the guess correctly or not
-As the computer, it will notify the player if they guessed the letter correctly
-As the player, you will be able to reset the game at anytime to get a clean slate and restart the game.
-As the player, you have 6 tries to try to guess the word before losing
-Stretch Goals
 
-Integrate it with AI so it can help me pick difficult and more obscure words to guess to add a difficulty setting
-Some fun/cool animations for all gameplay.
+# Start Game
+![Image](start-game.jpeg)
+
+
+## User Stories
+### MVP Goals
+- At the start of the game, a random word is selected from the chosen category. The word is displayed as a series of underscores, each representing a letter in the word. The player can guess a letter in the word by clicking on the letter's button.
+
+- If the guessed letter is in the word, all instances of that letter are revealed in the word. If the guessed letter is not in the word, the number of wrong guesses increases and a part of the hangman is drawn.
+
+- The player can also use the "Hint" button to reveal a random letter from the word. This can only be used once per game.
+
+- If the player correctly guesses all the letters in the word before running out of mistakes, they win the game, and their score increases by one.
+
+- If the player makes too many mistakes before guessing the word, they lose the game. They then have the opportunity to enter their name to be added to the high scores table.
+
+- The player can choose to play again at any time by clicking the "Play Again" button.
+
+
+### Stretch Goals
+- Add spacing between words to allow the possibility of guessing two words. Currently the game is only optimized for one word guesses as two words just display on the screen as one big word.
+
+- Add a seperate data file for my category arrays so that they can be easily accessed and also seperated from my javascript which ultimately makes it look more cleaner.
+

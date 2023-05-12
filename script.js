@@ -19,7 +19,7 @@ const jobs = [
 const maxWrong = 6;
 const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-let country = '';
+let word = '';
 let mistakes = 0;
 let guessed = [];
 let wordStatus = null;
@@ -93,7 +93,7 @@ function drawBodyPart() {
 
 // Game initialization functions
 function randomWordFromCategory() {
-  country = category[Math.floor(Math.random() * category.length)];
+  word = category[Math.floor(Math.random() * category.length)];
 }
 
 function generateButtons() {
@@ -114,7 +114,7 @@ function processGuessedLetter(chosenLetter) {
   if (guessed.includes(chosenLetter)) return;
   guessed.push(chosenLetter);
   document.getElementById(chosenLetter).setAttribute('disabled', true);
-  if (country.includes(chosenLetter)) {
+  if (word.includes(chosenLetter)) {
     updateWordStatus();
     checkIfGameWon();
   } else {
@@ -132,7 +132,7 @@ function updateGuessedLetters() {
 }
 
 function updateWordStatus() {
-  wordStatus = country.split('').map(letter => {
+  wordStatus = word.split('').map(letter => {
     if (guessed.includes(letter)) {
       return letter;
     } else if (letter === ' ') {
@@ -147,18 +147,20 @@ function updateWordStatus() {
 }
 
 function checkIfGameWon() {
-  if (wordStatus === country) {
+  if (wordStatus === word) {
     score++; // Increase the score
     document.getElementById('score').innerHTML = score; // Update the score display
     document.getElementById('message').innerHTML = 'You Won!!!';
+    document.getElementById('hint').setAttribute('disabled', true); // Disable hint button
   }
 }
 
 function checkIfGameLost() {
   if (mistakes !== maxWrong) return;
-  document.getElementById('wordSpotlight').innerHTML = `The answer was: ${country}`;
+  document.getElementById('wordSpotlight').innerHTML = `The answer was: ${word}`;
   document.getElementById('message').innerHTML = 'You failed to guess the word in time. Better luck next time!';
   drawBodyPart(); // Draw the right leg before showing the prompt
+  document.getElementById('hint').setAttribute('disabled', true); // Disable hint button
   setTimeout(() => {
     let playerName = prompt("Please enter your name for the high score table:");
     highScores.push({ name: playerName.toUpperCase(), score: score });
@@ -201,31 +203,15 @@ function updateMistakes() {
 function revealHint() {
   if (hintRevealed) return;
   let hintIndex;
-  const countryLetters = country.split('');
+  const wordLetters = word.split('');
   do {
-    hintIndex = Math.floor(Math.random() * countryLetters.length);
-  } while (guessed.includes(countryLetters[hintIndex]) || countryLetters[hintIndex] === '-' || countryLetters[hintIndex] === ' ');
-  guessed.push(countryLetters[hintIndex]); // Add the hint letter to the guessed array
+    hintIndex = Math.floor(Math.random() * wordLetters.length);
+  } while (guessed.includes(wordLetters[hintIndex]) || wordLetters[hintIndex] === '-' || wordLetters[hintIndex] === ' ');
+  guessed.push(wordLetters[hintIndex]); // Add the hint letter to the guessed array
   updateWordStatus(); // Update the word status
   checkIfGameWon(); // Check if the game is won
   hintRevealed = true;
   document.getElementById('hint').setAttribute('disabled', true);
-}
-
-
-// Reset Function
-function reset() {
-  selectCategory(); 
-  mistakes = 0;
-  guessed = [];
-  hintRevealed = false;
-  randomWord();
-  updateWordStatus();
-  updateMistakes();
-  generateButtons();
-  document.getElementById('hint').removeAttribute('disabled');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawInitialGameBoard();
 }
 
 // Initialization
@@ -238,10 +224,11 @@ function reset() {
   updateWordStatus();
   updateMistakes();
   generateButtons();
-  document.getElementById('hint').removeAttribute('disabled');
+  document.getElementById('hint').removeAttribute('disabled'); // Re-enable hint button
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawInitialGameBoard();
 }
+
 
 
 // Initialization
