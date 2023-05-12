@@ -1,0 +1,168 @@
+* {
+    box-sizing: border-box;
+}
+  
+body {
+    font-family: 'Dokdo', cursive;
+    text-align: center;
+    background-image: url("fotor_2023-5-11_14_16_47.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+  
+header h1 {
+    font-size: 100px;
+    margin: 0;
+}
+  
+header p {
+    font-size: 30px;
+    margin: 0;
+}
+.category-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+.category-button {
+    font-family: 'Dokdo', cursive;
+    background-color: white;
+    margin: 2px;
+    width: 120px;
+    height: 40px;
+    border: solid;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+#myCanvas {
+    background-color: white;
+}
+  
+#highScoresTable h3 {
+    text-align: center;
+}
+  
+#highScoresTable table {
+    width: 100%;
+    border-collapse: collapse;
+}
+  
+#highScoresTable th,
+#highScoresTable td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+}
+  
+.currentScore {
+    font-size: 30px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+  
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+  
+.currentScore {
+    font-size: 30px;
+}
+  
+.letter-button {
+    font-family: 'Dokdo', cursive;
+    background-color: white;
+    margin: 5px;
+    width: 90px;
+    height: 30px;
+    border: none;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    font-size: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.keyboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+  
+#wordSpotlight {
+    font-size: 40px;
+    margin: 5px;
+}
+  
+.guesses {
+    font-size: 30px;
+}
+  
+#hint {
+    font-family: 'Dokdo', cursive;
+    background-color: white;
+    margin: px;
+    font-size: 30px;
+}
+  
+.btn {
+    font-family: 'Dokdo', cursive;
+    background-color: white;
+    margin: 2px;
+    font-size: 30px;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 150px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    /* Adjust the width and margin */
+    width: 40%; /* Decrease to the desired width */
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.close {
+    color: #aaaaaa;
+    font-size: 28px;
+    font-weight: bold;
+    float: right; /* This should put the close button to the right */
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+ 
+#message {
+    font-size: 30px;
+}
